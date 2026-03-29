@@ -1,27 +1,33 @@
 
 import './App.css'
-import navImg from './assets/logo.png'
-import navCoin from './assets/Currency@2x.png'
+
 import Players from './component/Players/Players'
+import { Suspense, useState } from 'react';
+import Navbar from './component/navbar/Navbar';
+import SubNavbar from './component/navbar/SubNavbar';
+import SelectedPlayer from './component/selectedPlayer/SelectedPlayer';
 
 const playersPromise = fetch('./player.json').then(res => res.json());
 
 function App() {
+  const [toggle, setToggle] = useState(true);
+
+  const handleToggle = (value) => {
+    setToggle(value);
+  }
   return (
-    <div className='max-w-[1200px] mx-auto border-2'>
-      <div className="navbar">
-        <div className="flex-1">
-          <a className=" text-xl">
-            <img className='w-[60px] h-[60px]' src={navImg} alt="" />
-          </a>
-        </div>
-        <div className="flex items-center">
-           <span className='mr-1'>6000000000</span>
-           <span className='mr-1'>Coin</span>
-           <img src={navCoin} alt="" />
-        </div>
-      </div>
-      <Players playersPromise={playersPromise}></Players>
+    <div>
+      <Navbar></Navbar>
+      <SubNavbar handleToggle={handleToggle} toggle={toggle}></SubNavbar>
+
+      {
+        toggle === true ?
+          <Suspense fallback={<h2>Loading<span className="loading loading-ball loading-xl"></span><span className="loading loading-ball loading-xl"></span><span className="loading loading-ball loading-xl"></span></h2>}>
+            <Players playersPromise={playersPromise}></Players>
+          </Suspense>
+          : <SelectedPlayer></SelectedPlayer>
+      }
+
     </div>
   )
 }
