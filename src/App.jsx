@@ -12,6 +12,8 @@ const playersPromise = fetch('./player.json').then(res => res.json());
 function App() {
   const [toggle, setToggle] = useState(true);
   const [availableBalance, setAvailableBalance] = useState(6000000);
+  const [purchasedPlayer, setPurchasedPlayer] = useState([]);
+
 
   const handleToggle = (value) => {
     setToggle(value);
@@ -24,9 +26,15 @@ function App() {
       {
         toggle === true ?
           <Suspense fallback={<h2>Loading<span className="loading loading-ball loading-xl"></span><span className="loading loading-ball loading-xl"></span><span className="loading loading-ball loading-xl"></span></h2>}>
-            <Players playersPromise={playersPromise} setAvailableBalance={setAvailableBalance} availableBalance={availableBalance}></Players>
+            <Players
+              playersPromise={playersPromise}
+              setAvailableBalance={setAvailableBalance}
+              availableBalance={availableBalance}
+              setPurchasedPlayer={setPurchasedPlayer}
+              purchasedPlayer={purchasedPlayer}
+            ></Players>
           </Suspense>
-          : <SelectedPlayer></SelectedPlayer>
+          : <SelectedPlayer purchasedPlayer={purchasedPlayer}></SelectedPlayer>
       }
 
     </div>

@@ -3,7 +3,7 @@ import './player.css'
 import manImg from '../../assets/user 1.png'
 import flagImg from '../../assets/report 1.png'
 
-const Player = ({ player, setAvailableBalance, availableBalance}) => {
+const Player = ({ player, setAvailableBalance, availableBalance, setPurchasedPlayer, purchasedPlayer}) => {
     const [isSelected, setSelected] = useState(false);
     const handlePlayerData = (player) =>{
         
@@ -14,6 +14,7 @@ const Player = ({ player, setAvailableBalance, availableBalance}) => {
         else{
             setAvailableBalance(availableBalance-player.price);
             setSelected(true);
+            setPurchasedPlayer([...purchasedPlayer, player])
         }
     }
     return (

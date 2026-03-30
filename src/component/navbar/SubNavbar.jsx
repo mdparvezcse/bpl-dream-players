@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SubNavbar = ({ handleToggle, toggle }) => {
-    console.log(toggle);
+    
     return (
         <div className='max-w-300 mx-auto'>
             <div className='flex justify-between items-center m-5'>
