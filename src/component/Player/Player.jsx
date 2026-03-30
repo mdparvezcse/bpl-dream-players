@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './player.css'
 import manImg from '../../assets/user 1.png'
 import flagImg from '../../assets/report 1.png'
 
-const Player = ({ player }) => {
-
+const Player = ({ player, setAvailableBalance, availableBalance}) => {
+    const [isSelected, setSelected] = useState(false);
+    const handlePlayerData = (player) =>{
+        
+        const playerPrice = player.price;
+        if(playerPrice > availableBalance){
+            alert("Not enough balance");
+        }
+        else{
+            setAvailableBalance(availableBalance-player.price);
+            setSelected(true);
+        }
+    }
     return (
         <div className="card space-y-1">
             <img className="rounded-2xl mb-2 h-75 object-cover" src={player.img} alt="" />
@@ -36,7 +47,7 @@ const Player = ({ player }) => {
 
             <div className="flex justify-between items-center">
                 <p className="font-bold">Price: ${player.price}</p>
-                <button className="btn text-gray-400 hover:bg-[#E7FE29] hover:text-black hover:font-bold">Choose Player</button>
+                <button disabled={isSelected} onClick={()=> handlePlayerData(player)} className="btn text-black hover:bg-[#E7FE29] hover:text-gray-800 hover:font-bold">{isSelected? "Selected" : "Choose Player"}</button>
             </div>
 
         </div>

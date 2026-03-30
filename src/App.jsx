@@ -11,19 +11,20 @@ const playersPromise = fetch('./player.json').then(res => res.json());
 
 function App() {
   const [toggle, setToggle] = useState(true);
+  const [availableBalance, setAvailableBalance] = useState(6000000);
 
   const handleToggle = (value) => {
     setToggle(value);
   }
   return (
     <div>
-      <Navbar></Navbar>
+      <Navbar availableBalance={availableBalance}></Navbar>
       <SubNavbar handleToggle={handleToggle} toggle={toggle}></SubNavbar>
 
       {
         toggle === true ?
           <Suspense fallback={<h2>Loading<span className="loading loading-ball loading-xl"></span><span className="loading loading-ball loading-xl"></span><span className="loading loading-ball loading-xl"></span></h2>}>
-            <Players playersPromise={playersPromise}></Players>
+            <Players playersPromise={playersPromise} setAvailableBalance={setAvailableBalance} availableBalance={availableBalance}></Players>
           </Suspense>
           : <SelectedPlayer></SelectedPlayer>
       }
