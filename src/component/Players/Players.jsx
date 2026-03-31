@@ -2,6 +2,7 @@ import React, { use } from 'react';
 import Player from '../Player/Player';
 const Players = ({ playersPromise, setAvailableBalance, availableBalance, setPurchasedPlayer, purchasedPlayer}) => {
     const players = use(playersPromise);
+    
     return (
 
         <div className='max-w-300 mx-auto'>
@@ -12,6 +13,7 @@ const Players = ({ playersPromise, setAvailableBalance, availableBalance, setPur
                         availableBalance={availableBalance}
                         setPurchasedPlayer={setPurchasedPlayer}
                         purchasedPlayer={purchasedPlayer}
+                       
                         ></Player>)
                 }
             </div>

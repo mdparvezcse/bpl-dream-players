@@ -2,23 +2,34 @@ import React, { useState } from 'react';
 import './player.css'
 import manImg from '../../assets/user 1.png'
 import flagImg from '../../assets/report 1.png'
+import { toast } from 'react-toastify';
 
-const Player = ({ player, setAvailableBalance, availableBalance, setPurchasedPlayer, purchasedPlayer}) => {
+const Player = ({ player, setAvailableBalance, availableBalance, setPurchasedPlayer, purchasedPlayer }) => {
     const [isSelected, setSelected] = useState(false);
-    const handlePlayerData = (player) =>{
-        
+    const handlePlayerData = (player) => {
+
         const playerPrice = player.price;
-        if(playerPrice > availableBalance){
-            alert("Not enough balance");
+        if (playerPrice > availableBalance && purchasedPlayer.length > 5) {
+            toast("Not enough balance");
+            toast("Not enough place your team");
+            return
         }
-        else{
-            setAvailableBalance(availableBalance-player.price);
+        else if (playerPrice > availableBalance ) {
+            toast("Not enough balance");
+            return
+        }    
+        else if(purchasedPlayer.length > 5) {
+            toast("Not enough place your team");
+            return
+        }
+        else {
+            setAvailableBalance(availableBalance - player.price);
             setSelected(true);
-            setPurchasedPlayer([...purchasedPlayer, player])
+            setPurchasedPlayer([...purchasedPlayer, player]);
         }
     }
     return (
-        <div className="card space-y-1">
+        <div className="card space-y-1 shadow-md border-gray-200">
             <img className="rounded-2xl mb-2 h-75 object-cover" src={player.img} alt="" />
 
             <div className='flex items-center'>
@@ -34,7 +45,7 @@ const Player = ({ player, setAvailableBalance, availableBalance, setPurchasedPla
                 <h1>{player.role}</h1>
             </div>
 
-            <hr className='text-gray-400'/>
+            <hr className='text-gray-400' />
 
             <div className="flex justify-between">
                 <p className='font-bold'>Rating</p>
@@ -48,7 +59,7 @@ const Player = ({ player, setAvailableBalance, availableBalance, setPurchasedPla
 
             <div className="flex justify-between items-center">
                 <p className="font-bold">Price: ${player.price}</p>
-                <button disabled={isSelected} onClick={()=> handlePlayerData(player)} className="btn text-black hover:bg-[#E7FE29] hover:text-gray-800 hover:font-bold">{isSelected? "Selected" : "Choose Player"}</button>
+                <button disabled={isSelected} onClick={() => handlePlayerData(player)} className="btn text-black hover:bg-[#E7FE29] hover:text-gray-800 hover:font-bold">{isSelected ? "Selected" : "Choose Player"}</button>
             </div>
 
         </div>

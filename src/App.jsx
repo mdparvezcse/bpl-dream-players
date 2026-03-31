@@ -1,6 +1,6 @@
 
 import './App.css'
-
+import { ToastContainer} from 'react-toastify';
 import Players from './component/Players/Players'
 import { Suspense, useState } from 'react';
 import Navbar from './component/navbar/Navbar';
@@ -11,7 +11,7 @@ const playersPromise = fetch('./player.json').then(res => res.json());
 
 function App() {
   const [toggle, setToggle] = useState(true);
-  const [availableBalance, setAvailableBalance] = useState(6000000);
+  const [availableBalance, setAvailableBalance] = useState(10000000);
   const [purchasedPlayer, setPurchasedPlayer] = useState([]);
 
 
@@ -21,7 +21,7 @@ function App() {
   return (
     <div>
       <Navbar availableBalance={availableBalance}></Navbar>
-      <SubNavbar handleToggle={handleToggle} toggle={toggle}></SubNavbar>
+      <SubNavbar handleToggle={handleToggle} toggle={toggle} purchasedPlayer={purchasedPlayer}></SubNavbar>
 
       {
         toggle === true ?
@@ -34,9 +34,14 @@ function App() {
               purchasedPlayer={purchasedPlayer}
             ></Players>
           </Suspense>
-          : <SelectedPlayer purchasedPlayer={purchasedPlayer}></SelectedPlayer>
+          : <SelectedPlayer
+            purchasedPlayer={purchasedPlayer}
+            setPurchasedPlayer={setPurchasedPlayer}
+            setAvailableBalance={setAvailableBalance}
+            availableBalance={availableBalance}
+          ></SelectedPlayer>
       }
-
+      <ToastContainer></ToastContainer>
     </div>
   )
 }
